@@ -10,11 +10,51 @@ class Overview extends StatefulWidget {
 
 class _OverviewState extends State<Overview> {
   int _selectedIndex = 0;
-
-  static const List<Widget> _selectedPage = <Widget>[
-    Text('Overview Screen: list of meals goes here'),
-    Text('Edit Screen: see and edit one meal here'),
+  List<String> _meals = <String>[
+    "Dakgalbi",
+    "Korean BBQ",
+    "Jjimdak",
+    "Bibimbap",
+    "Gimbap",
+    "Ttoppokki",
+    "Cold Noodles",
+    "Rice Cake",
   ];
+
+  Widget _selectedPage() {
+    switch (_selectedIndex) {
+      case 0:
+        return _buildMealsPage();
+        break;
+      case 1:
+        return _buildEditPage();
+        break;
+      default:
+        return Text(
+            "Error: Default case for selected index. This should not happen.");
+    }
+  }
+
+  Widget _buildEditPage() {
+    return Text('Edit Screen: see and edit one meal here');
+  }
+
+  Widget _buildMealsPage() {
+    return ListView.builder(
+        padding: EdgeInsets.all(16.0),
+        itemCount: _meals.length * 2, // length * 2 because of the dividers
+        itemBuilder: (context, i) {
+          if (i.isOdd) return Divider();
+          final index = i ~/ 2;
+          return _buildMealRow(_meals[index]);
+        });
+  }
+
+  Widget _buildMealRow(String meal) {
+    return ListTile(
+      title: Text(meal),
+    );
+  }
 
   void _onItemTapped(int index) {
     setState(() {
@@ -30,7 +70,7 @@ class _OverviewState extends State<Overview> {
       ),
       body: Container(
         alignment: Alignment.center,
-        child: _selectedPage.elementAt(_selectedIndex),
+        child: _selectedPage(), //_selectedPage.elementAt(_selectedIndex),
       ),
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
