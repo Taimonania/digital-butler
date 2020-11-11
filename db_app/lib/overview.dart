@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 class Overview extends StatefulWidget {
   Overview({Key key, this.title}) : super(key: key);
   final String title;
+
   @override
   _OverviewState createState() => _OverviewState();
 }
@@ -29,8 +30,6 @@ class _OverviewState extends State<Overview> {
             label: "edit",
           ),
         ],
-        //currentIndex: 0,
-        //selectedItemColor: Colors.blue,
       ),
     );
   }
