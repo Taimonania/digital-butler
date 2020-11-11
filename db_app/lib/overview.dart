@@ -10,11 +10,38 @@ class Overview extends StatefulWidget {
 
 class _OverviewState extends State<Overview> {
   int _selectedIndex = 0;
+  List<String> _meals = <String>[
+    "Dakgalbi",
+    "Korean BBQ",
+    "Jjimdak",
+    "Bibimbap",
+    "Gimbap",
+    "Ttoppokki",
+    "Cold Noodles",
+    "Rice Cake",
+  ];
 
-  static const List<Widget> _selectedPage = <Widget>[
+  static List<Widget> _selectedPage = <Widget>[
     Text('Overview Screen: list of meals goes here'),
     Text('Edit Screen: see and edit one meal here'),
   ];
+
+  Widget _buildMeals() {
+    return ListView.builder(
+        padding: EdgeInsets.all(16.0),
+        itemCount: _meals.length * 2, // *2 because of the dividers
+        itemBuilder: (context, i) {
+          if (i.isOdd) return Divider();
+          final index = i ~/ 2;
+          return _buildMealRow(_meals[index]);
+        });
+  }
+
+  Widget _buildMealRow(String meal) {
+    return ListTile(
+      title: Text(meal),
+    );
+  }
 
   void _onItemTapped(int index) {
     setState(() {
@@ -30,7 +57,7 @@ class _OverviewState extends State<Overview> {
       ),
       body: Container(
         alignment: Alignment.center,
-        child: _selectedPage.elementAt(_selectedIndex),
+        child: _buildMeals(), //_selectedPage.elementAt(_selectedIndex),
       ),
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
