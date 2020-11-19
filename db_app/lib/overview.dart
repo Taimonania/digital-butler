@@ -12,7 +12,9 @@ class Overview extends StatefulWidget {
 }
 
 class _OverviewState extends State<Overview> {
+  // index for the currently selected bottom menu
   int _selectedIndex = 0;
+
   MealList _meals;
   DataService service = new DataService();
   TextEditingController controller = new TextEditingController();
@@ -20,14 +22,13 @@ class _OverviewState extends State<Overview> {
   String currentEdit = "";
 
   _OverviewState() {
-    List<MealItem> _mealList = <MealItem>[
-      MealItem(name: "Dakgalbi", tasty: false),
-      MealItem(name: "Korean BBQ", tasty: false),
-      MealItem(name: "Jjimdak", tasty: false),
-      MealItem(name: "Bibimbap", tasty: false),
-      MealItem(name: "Gimbap", tasty: false),
-    ];
-    _meals = new MealList.nonempty(_mealList);
+    _meals = MealList();
+
+    // _meals.add(MealItem(name: "Dakgalbi", tasty: false));
+    // _meals.add(MealItem(name: "Korean BBQ", tasty: false));
+    // _meals.add(MealItem(name: "Jjimdak", tasty: false));
+    // _meals.add(MealItem(name: "Bibimbap", tasty: false));
+    // _meals.add(MealItem(name: "Gimbap", tasty: false));
   }
 
   Widget _selectedPage() {
@@ -51,7 +52,6 @@ class _OverviewState extends State<Overview> {
   }
 
   Widget _buildEditPage() {
-    controller.
     return Column(
       children: <Widget>[
         ListTile(
@@ -83,26 +83,28 @@ class _OverviewState extends State<Overview> {
   }
 
   Widget _buildMealsPage() {
-    return ListView.builder(
-        padding: EdgeInsets.all(16.0),
-        itemCount:
-            _meals.meals.length * 2, // length * 2 because of the dividers
-        itemBuilder: (BuildContext context, int i) {
-          return GestureDetector(
-            child: (() {
-              if (i.isOdd) return Divider();
-              final index = i ~/ 2;
-              return _buildMealRow(_meals.meals[index]);
-            }()),
-            onTap: () => Scaffold.of(context)
-                .showSnackBar(SnackBar(content: Text(i.toString()))),
-          );
+    return FutureBuilder<MealList>(
+        future: service.getMeals(),
+        builder: (BuildContext context, AsyncSnapshot<MealList> snapshot) {
+          if (snapshot.hasData) {
+            _meals = snapshot.data;
+          }
+          return ListView.builder(
+              padding: EdgeInsets.all(16.0),
+              itemCount:
+                  _meals.meals.length * 2, // length * 2 because of the dividers
+              itemBuilder: (BuildContext context, int i) {
+                return GestureDetector(
+                  child: (() {
+                    if (i.isOdd) return Divider();
+                    final index = i ~/ 2;
+                    return _buildMealRow(_meals.meals[index]);
+                  }()),
+                  onTap: () => Scaffold.of(context)
+                      .showSnackBar(SnackBar(content: Text(i.toString()))),
+                );
+              });
         });
-    // itemBuilder: (BuildContext context, int i) {
-    //   if (i.isOdd) return Divider();
-    //   final index = i ~/ 2;
-    //   return _buildMealRow(_meals.meals[index]);
-    // });
   }
 
   Widget _buildMealRow(MealItem meal) {

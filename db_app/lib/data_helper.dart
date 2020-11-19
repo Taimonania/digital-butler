@@ -20,7 +20,7 @@ class MealItem {
 class MealList {
   List<MealItem> meals;
 
-  MealList(List<MealItem> mealList) {
+  MealList() {
     meals = new List();
   }
 
