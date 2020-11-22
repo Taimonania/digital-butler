@@ -1,5 +1,5 @@
 import 'dart:developer';
-
+import 'meal.dart';
 import 'package:flutter/material.dart';
 import 'data_helper.dart';
 
@@ -29,9 +29,10 @@ class _OverviewState extends State<Overview> {
   }
 
   Widget _buildMealRow(MealItem meal) {
-    return ListTile(
-      title: Text(meal.name),
-    );
+    // return ListTile(
+    //   title: Text(meal.name),
+    // );
+    return MealExpand(meal);
   }
 
   @override

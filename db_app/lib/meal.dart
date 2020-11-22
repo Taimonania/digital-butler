@@ -1,16 +1,24 @@
 import 'package:flutter/material.dart';
+import 'data_helper.dart';
+import 'package:expandable/expandable.dart';
 
-class Meal extends StatefulWidget {
-  Meal({Key key, this.title}) : super(key: key);
-  final String title;
+class MealExpand extends StatelessWidget {
+  final MealItem meal;
 
-  @override
-  _MealState createState() => _MealState();
-}
+  MealExpand(this.meal);
 
-class _MealState extends State<Meal> {
   @override
   Widget build(BuildContext context) {
-    return Text(widget.title);
+    return ExpandablePanel(
+      header: Text(meal.name),
+      expanded: Text(
+        "this is where all the juicy details are \nmore details \n even",
+        softWrap: true,
+      ),
+      // ignore: deprecated_member_use
+      tapHeaderToExpand: true,
+      // ignore: deprecated_member_use
+      hasIcon: true,
+    );
   }
 }

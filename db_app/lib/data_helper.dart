@@ -17,6 +17,10 @@ class MealItem {
   }
 }
 
+/**
+ *  here is where I would add a expandable list with a image widget as
+ * a child to add images of the meals to the widget
+ */
 class MealList {
   List<MealItem> meals;
 
