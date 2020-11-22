@@ -21,11 +21,11 @@ class _OverviewState extends State<Overview> {
   _OverviewState() {
     _meals = MealList();
 
-    _meals.add(MealItem(name: "Dakgalbi", tasty: false));
-    _meals.add(MealItem(name: "Korean BBQ", tasty: false));
-    _meals.add(MealItem(name: "Jjimdak", tasty: false));
-    _meals.add(MealItem(name: "Bibimbap", tasty: false));
-    _meals.add(MealItem(name: "Gimbap", tasty: false));
+    // _meals.add(MealItem(name: "Dakgalbi", tasty: false));
+    // _meals.add(MealItem(name: "Korean BBQ", tasty: false));
+    // _meals.add(MealItem(name: "Jjimdak", tasty: false));
+    // _meals.add(MealItem(name: "Bibimbap", tasty: false));
+    // _meals.add(MealItem(name: "Gimbap", tasty: false));
   }
 
   Widget _buildMealRow(MealItem meal) {

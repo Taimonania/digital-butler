@@ -48,7 +48,7 @@ class DataService {
 
   void storeMeals(MealList meals) async {
     await storage.ready;
-    storage.setItem('meals', meals);
+    storage.setItem('meals', meals.toJSONEncodable());
   }
 
   Future<MealList> getMeals() async {
