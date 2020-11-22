@@ -19,7 +19,7 @@ class _EditPageState extends State<EditPage> {
   }
 
   void _save() {
-    _meals.add(MealItem(name: controller.value.text, tasty: false));
+    service.addMeal(MealItem(name: controller.value.text, tasty: false));
     print("A new meal was saved: " + controller.value.text);
     controller.clear();
   }

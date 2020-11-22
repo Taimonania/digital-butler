@@ -46,14 +46,37 @@ class MealList {
 class DataService {
   LocalStorage storage = new LocalStorage('meals');
 
+  void addMeal(MealItem meal) {
+    getMeals().then((curMeals) {
+      curMeals.add(meal);
+      storeMeals(curMeals);
+    });
+  }
+
   void storeMeals(MealList meals) async {
     await storage.ready;
     storage.setItem('meals', meals.toJSONEncodable());
   }
 
   Future<MealList> getMeals() async {
+    MealList mealList = new MealList();
+
     await storage.ready;
-    return storage.getItem('meals');
+    var items = storage.getItem('meals');
+    if (items == null) {
+      print("Meals list from the database is null");
+      return MealList();
+    } else {
+      mealList.meals = List<MealItem>.from(
+        (items as List).map(
+          (meal) => MealItem(
+            name: meal['name'],
+            tasty: meal['tasty'],
+          ),
+        ),
+      );
+      return mealList;
+    }
   }
 
   void clearMeals() async {
