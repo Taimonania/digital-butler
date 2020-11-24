@@ -48,8 +48,8 @@ class _OverviewState extends State<Overview> {
                     final index = i ~/ 2;
                     return _buildMealRow(_meals.meals[index]);
                   }()),
-                  onTap: () => Scaffold.of(context)
-                      .showSnackBar(SnackBar(content: Text(i.toString()))),
+                  // onTap: () => Scaffold.of(context)
+                  //     .showSnackBar(SnackBar(content: Text(i.toString()))),
                 );
               });
         });
