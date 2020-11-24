@@ -3,15 +3,17 @@ import 'package:localstorage/localstorage.dart';
 
 class MealItem {
   String name;
-  bool tasty;
+  String localName;
+  String picPath;
 
-  MealItem({this.name, this.tasty});
+  MealItem({this.name, this.localName, this.picPath});
 
   toJSONEncodable() {
     Map<String, dynamic> m = new Map();
 
     m['name'] = name;
-    m['tasty'] = tasty;
+    m['local_name'] = localName;
+    m['pic_path'] = picPath;
 
     return m;
   }
