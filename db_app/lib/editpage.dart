@@ -1,5 +1,7 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'data_helper.dart';
+import 'package:image_picker/image_picker.dart';
 
 class EditPage extends StatefulWidget {
   EditPage({Key key, this.title}) : super(key: key);
@@ -13,6 +15,17 @@ class _EditPageState extends State<EditPage> {
   TextEditingController controller = new TextEditingController();
   DataService service = new DataService();
   MealList _meals;
+
+  //file where the image is stored
+  File _image;
+  // future for getting the image
+  Future getImage() async {
+    // ignore: deprecated_member_use
+    final image = await ImagePicker.pickImage(source: ImageSource.camera);
+    setState(() {
+      _image = image;
+    });
+  }
 
   _EditPageState() {
     _meals = new MealList();
@@ -45,10 +58,21 @@ class _EditPageState extends State<EditPage> {
                 tooltip: 'Save',
               ),
               IconButton(
-                icon: Icon(Icons.delete),
-                onPressed: service.clearMeals,
-                tooltip: 'Clear storage',
-              )
+                icon: Icon(Icons.camera),
+                onPressed: getImage,
+              ),
+              Center(
+                  //checking if the image is null
+                  child: _image == null
+                      ? Text("image is not loaded")
+                      : Image.file(_image)),
+              // this icon when pressed clears all of the meals saved which
+              // is not desired
+              // IconButton(
+              //   icon: Icon(Icons.delete),
+              //   onPressed: service.clearMeals,
+              //   tooltip: 'Clear storage',
+              // )
             ],
           ),
         ),
