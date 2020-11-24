@@ -72,9 +72,9 @@ class DataService {
       mealList.meals = List<MealItem>.from(
         (items as List).map(
           (meal) => MealItem(
-            name: meal['name'],
-            tasty: meal['tasty'],
-          ),
+              name: meal['name'],
+              localName: meal['local_name'],
+              picPath: meal['pic_path']),
         ),
       );
       return mealList;
