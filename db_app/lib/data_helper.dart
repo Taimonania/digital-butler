@@ -5,6 +5,7 @@ class MealItem {
   String name;
   String localName;
   String picPath;
+  String description;
 
   MealItem({this.name, this.localName, this.picPath});
 
@@ -14,7 +15,7 @@ class MealItem {
     m['name'] = name;
     m['local_name'] = localName;
     m['pic_path'] = picPath;
-
+    m['description'] = description;
     return m;
   }
 }
