@@ -7,7 +7,7 @@ class MealItem {
   String picPath;
   String description;
 
-  MealItem({this.name, this.localName, this.picPath});
+  MealItem({this.name, this.description, this.localName, this.picPath});
 
   toJSONEncodable() {
     Map<String, dynamic> m = new Map();
@@ -74,6 +74,7 @@ class DataService {
         (items as List).map(
           (meal) => MealItem(
               name: meal['name'],
+              description: meal['description'],
               localName: meal['local_name'],
               picPath: meal['pic_path']),
         ),

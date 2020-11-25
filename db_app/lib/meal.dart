@@ -12,7 +12,7 @@ class MealExpand extends StatelessWidget {
     return ExpandablePanel(
       header: Text(meal.name),
       expanded: Text(
-        "this is where all the juicy details are \nmore details \n even",
+        meal.description,
         softWrap: true,
       ),
       // ignore: deprecated_member_use

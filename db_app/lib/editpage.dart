@@ -1,4 +1,3 @@
-import 'dart:html';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'data_helper.dart';
@@ -19,6 +18,8 @@ class _EditPageState extends State<EditPage> {
   DataService service = new DataService();
   String picPath;
   MealList _meals;
+  final nameCon = new TextEditingController();
+  final desCon = new TextEditingController();
 
   //file where the image is stored
   File _image;
@@ -41,7 +42,10 @@ class _EditPageState extends State<EditPage> {
 
   void _save() {
     service.addMeal(MealItem(
-        name: controller.value.text, localName: "false", picPath: "false"));
+        name: nameCon.value.text,
+        description: desCon.value.text,
+        localName: "false",
+        picPath: "false"));
     print("A new meal was saved: " + controller.value.text);
     controller.clear();
   }
@@ -52,11 +56,11 @@ class _EditPageState extends State<EditPage> {
       children: <Widget>[
         ListTile(
           title: TextField(
-            controller: controller,
+            controller: nameCon,
             decoration: InputDecoration(
-              labelText: 'Want to add a new meal?',
+              labelText: 'What did you get?',
             ),
-            onEditingComplete: _save,
+            //onEditingComplete: _save, !!! changed this
           ),
           trailing: Row(
             mainAxisSize: MainAxisSize.min,
@@ -81,20 +85,28 @@ class _EditPageState extends State<EditPage> {
             ],
           ),
         ),
-        Container(
-          TextField(
-            controller: controller,
-            decoration: InputDecoration(
-              labelText: 'How was the meal?',
-            ),
-            onEditingComplete: _save,
-          ),
+        ListBody(
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: TextField(
+                controller: desCon,
+                decoration: InputDecoration(
+                  labelText: 'How was the meal?',
+                ),
+                //onEditingComplete: _save,
+              ),
+            )
+          ],
         ),
-        Center(
-            //checking if the image is null
-            child: _image == null
-                ? Text("image is not loaded")
-                : Image.file(_image)),
+        Padding(
+          padding: const EdgeInsets.all(32.0),
+          child: Center(
+              //checking if the image is null
+              child: _image == null
+                  ? Text("image is not loaded")
+                  : Image.file(_image)),
+        ),
       ],
     );
   }
