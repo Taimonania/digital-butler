@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'data_helper.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:path_provider/path_provider.dart';
 
 class EditPage extends StatefulWidget {
   EditPage({Key key, this.title, this.description}) : super(key: key);
@@ -16,6 +17,7 @@ class EditPage extends StatefulWidget {
 class _EditPageState extends State<EditPage> {
   TextEditingController controller = new TextEditingController();
   DataService service = new DataService();
+  String picPath;
   MealList _meals;
 
   //file where the image is stored
@@ -24,6 +26,10 @@ class _EditPageState extends State<EditPage> {
   Future getImage() async {
     // ignore: deprecated_member_use
     final image = await ImagePicker.pickImage(source: ImageSource.camera);
+    final directory = await getApplicationDocumentsDirectory();
+    picPath = directory.path;
+    final File newImage = await image.copy('$picPath/test.png');
+
     setState(() {
       _image = image;
     });
@@ -35,7 +41,7 @@ class _EditPageState extends State<EditPage> {
 
   void _save() {
     service.addMeal(MealItem(
-        name: controller.value.text, description: controller.value.text));
+        name: controller.value.text, localName: "false", picPath: "false"));
     print("A new meal was saved: " + controller.value.text);
     controller.clear();
   }
