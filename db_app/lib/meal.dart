@@ -18,7 +18,9 @@ class MealExpand extends StatelessWidget {
             meal.description,
             softWrap: true,
           ),
-          Image.file(File(meal.picPath)),
+          meal.picPath != ''
+              ? Image.file(File(meal.picPath))
+              : Text('no image for this meal'),
         ],
       ),
       // ignore: deprecated_member_use

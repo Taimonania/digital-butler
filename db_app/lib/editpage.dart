@@ -50,6 +50,8 @@ class _EditPageState extends State<EditPage> {
         picPath: imgPath));
     print("A new meal was saved: " + controller.value.text);
     controller.clear();
+    nameCon.clear();
+    desCon.clear();
   }
 
   @override
