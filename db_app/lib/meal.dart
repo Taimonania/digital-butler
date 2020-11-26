@@ -28,6 +28,9 @@ class MealExpand extends StatelessWidget {
             ),
             meal.picPath != ''
                 ? Container(
+                    decoration: BoxDecoration(
+                      border: Border.all(width: 3.0, color: Colors.red[100]),
+                    ),
                     alignment: Alignment.center,
                     padding: const EdgeInsets.all(4.0),
                     child: Image.file(
@@ -35,6 +38,11 @@ class MealExpand extends StatelessWidget {
                     ),
                   )
                 : Container(
+                    decoration: BoxDecoration(
+                      border: Border(
+                          bottom:
+                              BorderSide(width: 2.0, color: Colors.red[100])),
+                    ),
                     padding: const EdgeInsets.all(2.0),
                     child: Text(
                       'no image for this meal',
