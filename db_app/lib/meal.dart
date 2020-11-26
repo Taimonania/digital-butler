@@ -10,28 +10,46 @@ class MealExpand extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ExpandablePanel(
-      header: Text(meal.name),
-      expanded: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(
-              meal.description,
-              softWrap: true,
+    return Container(
+      child: ExpandablePanel(
+        header: Text(
+          meal.name,
+          style: TextStyle(color: Colors.red, fontSize: 18),
+        ),
+        expanded: Column(
+          children: [
+            Container(
+              alignment: Alignment.centerLeft,
+              padding: const EdgeInsets.all(2.0),
+              child: Text(
+                meal.description + "\n",
+                softWrap: true,
+              ),
             ),
-          ),
-          meal.picPath != ''
-              ? Image.file(File(meal.picPath))
-              : Text('no image for this meal'),
-        ],
+            meal.picPath != ''
+                ? Container(
+                    alignment: Alignment.center,
+                    padding: const EdgeInsets.all(4.0),
+                    child: Image.file(
+                      File(meal.picPath),
+                    ),
+                  )
+                : Container(
+                    padding: const EdgeInsets.all(2.0),
+                    child: Text(
+                      'no image for this meal',
+                      softWrap: true,
+                      style: TextStyle(fontStyle: FontStyle.italic),
+                    )),
+          ],
+        ),
+        // ignore: deprecated_member_use
+        tapHeaderToExpand: true,
+        // ignore: deprecated_member_use
+        hasIcon: true,
+        // ignore: deprecated_member_use
+        iconColor: Colors.redAccent,
       ),
-      // ignore: deprecated_member_use
-      tapHeaderToExpand: true,
-      // ignore: deprecated_member_use
-      hasIcon: true,
-      // ignore: deprecated_member_use
-      iconColor: Colors.redAccent,
     );
   }
 }

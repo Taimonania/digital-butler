@@ -33,7 +33,8 @@ class _EditPageState extends State<EditPage> {
       maxWidth: 400,
     );
     //final directory = await getApplicationDocumentsDirectory();
-    imgPath = image.path;
+
+    image == null ? imgPath = '' : imgPath = image.path;
     File newImage = File(imgPath);
     //final File newImage = await newImage.copy(newImage.path);
 
@@ -60,75 +61,75 @@ class _EditPageState extends State<EditPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        ListTile(
-          title: TextField(
-            controller: nameCon,
-            decoration: InputDecoration(
-              labelText: 'What did you get?',
+    return SingleChildScrollView(
+      child: Column(
+        children: <Widget>[
+          ListTile(
+            title: TextField(
+              controller: nameCon,
+              decoration: InputDecoration(
+                labelText: 'What did you get?',
+              ),
+              //onEditingComplete: _save, !!! changed this
             ),
-            //onEditingComplete: _save, !!! changed this
-          ),
-          trailing: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              IconButton(
-                icon: Icon(Icons.save, color: Colors.redAccent),
-                onPressed: _save,
-                tooltip: 'Save',
-                splashColor: Colors.green[100],
-              ),
-
-              // this icon when pressed clears all of the meals saved which
-              // is not desired
-              // IconButton(
-              //   icon: Icon(Icons.delete),
-              //   onPressed: service.clearMeals,
-              //   tooltip: 'Clear storage',
-              // )
-            ],
-          ),
-        ),
-        ListBody(
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: TextField(
-                controller: desCon,
-                decoration: InputDecoration(
-                  labelText: 'How was the meal?',
+            trailing: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                IconButton(
+                  icon: Icon(Icons.save, color: Colors.redAccent),
+                  onPressed: _save,
+                  tooltip: 'Save',
+                  splashColor: Colors.green[100],
                 ),
-                //onEditingComplete: _save,
-              ),
-            )
-          ],
-        ),
-        Container(
-          margin: EdgeInsets.all(16),
-          padding: const EdgeInsets.all(8.0),
-          child: Center(
-              //checking if the image is null
-              child: _image == null
-                  ? Text("take a pic...")
-                  : Image.file(
-                      _image,
-                      width: 330,
-                      height: 330,
-                    )),
-        ),
-        Container(
-          margin: EdgeInsets.all(5),
-          child: IconButton(
-            icon: Icon(Icons.camera),
-            onPressed: getImage,
-            splashColor: Colors.lightBlue,
+
+                // this icon when pressed clears all of the meals saved which
+                // is not desired
+                // IconButton(
+                //   icon: Icon(Icons.delete),
+                //   onPressed: service.clearMeals,
+                //   tooltip: 'Clear storage',
+                // )
+              ],
+            ),
           ),
-          decoration: BoxDecoration(
-              shape: BoxShape.circle, color: Colors.redAccent[100]),
-          alignment: Alignment.center,
-        ),
-      ],
+          Container(
+            padding: const EdgeInsets.all(16.0),
+            child: TextField(
+              controller: desCon,
+              minLines: 4,
+              maxLines: 24,
+              decoration: InputDecoration(
+                labelText: 'How was the meal?',
+              ),
+              //onEditingComplete: _save,
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.all(16),
+            padding: const EdgeInsets.all(8.0),
+            child: Center(
+                //checking if the image is null
+                child: imgPath == ''
+                    ? Text("take a pic...")
+                    : Image.file(
+                        _image,
+                        width: 330,
+                        height: 330,
+                      )),
+          ),
+          Container(
+            margin: EdgeInsets.all(5),
+            child: IconButton(
+              icon: Icon(Icons.camera),
+              onPressed: getImage,
+              splashColor: Colors.lightBlue,
+            ),
+            decoration: BoxDecoration(
+                shape: BoxShape.circle, color: Colors.redAccent[100]),
+            alignment: Alignment.center,
+          ),
+        ],
+      ),
     );
   }
 }
