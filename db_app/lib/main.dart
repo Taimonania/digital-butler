@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'editpage.dart';
 import 'overview.dart';
+import 'translation/translation.dart';
 
 void main() {
   runApp(MyApp());
@@ -46,6 +47,9 @@ class _MainViewState extends State<MainView> {
       case 1:
         return EditPage(title: widget.title);
         break;
+      case 2:
+        return TranslationScreen();
+        break;
       default:
         return Text(
             "Error: Default case for selected index. This should not happen.");
@@ -75,8 +79,12 @@ class _MainViewState extends State<MainView> {
             label: "Home",
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.edit),
-            label: "Edit",
+            icon: Icon(Icons.add),
+            label: "New",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.translate),
+            label: "Translation",
           ),
         ],
         currentIndex: _selectedIndex,
