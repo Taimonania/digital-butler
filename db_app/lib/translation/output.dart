@@ -28,7 +28,7 @@ class _OutputScreenState extends State<OutputScreen> {
             fontWeight: FontWeight.w500,
           )),
         ),
-        backgroundColor: Colors.deepOrange,
+        backgroundColor: Colors.red,
       ),
       body: Container(
           width: MediaQuery.of(context).size.width,
@@ -43,7 +43,7 @@ class _OutputScreenState extends State<OutputScreen> {
                   height: (MediaQuery.of(context).size.width - 32) * 3 / 4,
                   decoration: BoxDecoration(
                     color: Colors.white,
-                    border: Border.all(color: Colors.deepOrange, width: 2),
+                    border: Border.all(color: Colors.red, width: 2),
                     borderRadius: BorderRadius.all(Radius.circular(10)),
                   ),
                   child: ClipRRect(
@@ -57,7 +57,7 @@ class _OutputScreenState extends State<OutputScreen> {
                   'OUTPUT',
                   style: GoogleFonts.poppins(
                       textStyle: TextStyle(
-                    color: Colors.deepOrange,
+                    color: Colors.red,
                     fontSize: 14,
                     fontWeight: FontWeight.w700,
                   )),

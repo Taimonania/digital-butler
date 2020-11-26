@@ -14,9 +14,12 @@ class MealExpand extends StatelessWidget {
       header: Text(meal.name),
       expanded: Column(
         children: [
-          Text(
-            meal.description,
-            softWrap: true,
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              meal.description,
+              softWrap: true,
+            ),
           ),
           meal.picPath != ''
               ? Image.file(File(meal.picPath))
@@ -27,6 +30,8 @@ class MealExpand extends StatelessWidget {
       tapHeaderToExpand: true,
       // ignore: deprecated_member_use
       hasIcon: true,
+      // ignore: deprecated_member_use
+      iconColor: Colors.redAccent,
     );
   }
 }

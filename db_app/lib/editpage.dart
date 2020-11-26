@@ -27,7 +27,11 @@ class _EditPageState extends State<EditPage> {
   // future for getting the image
   Future getImage() async {
     // ignore: deprecated_member_use
-    final image = await ImagePicker.pickImage(source: ImageSource.camera);
+    final image = await ImagePicker.pickImage(
+      source: ImageSource.camera,
+      maxHeight: 400,
+      maxWidth: 400,
+    );
     //final directory = await getApplicationDocumentsDirectory();
     imgPath = image.path;
     File newImage = File(imgPath);
@@ -70,13 +74,10 @@ class _EditPageState extends State<EditPage> {
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               IconButton(
-                icon: Icon(Icons.save),
+                icon: Icon(Icons.save, color: Colors.redAccent),
                 onPressed: _save,
                 tooltip: 'Save',
-              ),
-              IconButton(
-                icon: Icon(Icons.camera),
-                onPressed: getImage,
+                splashColor: Colors.green[100],
               ),
 
               // this icon when pressed clears all of the meals saved which
@@ -103,13 +104,29 @@ class _EditPageState extends State<EditPage> {
             )
           ],
         ),
-        Padding(
-          padding: const EdgeInsets.all(32.0),
+        Container(
+          margin: EdgeInsets.all(16),
+          padding: const EdgeInsets.all(8.0),
           child: Center(
               //checking if the image is null
               child: _image == null
-                  ? Text("image is not loaded")
-                  : Image.file(_image)),
+                  ? Text("take a pic...")
+                  : Image.file(
+                      _image,
+                      width: 330,
+                      height: 330,
+                    )),
+        ),
+        Container(
+          margin: EdgeInsets.all(5),
+          child: IconButton(
+            icon: Icon(Icons.camera),
+            onPressed: getImage,
+            splashColor: Colors.lightBlue,
+          ),
+          decoration: BoxDecoration(
+              shape: BoxShape.circle, color: Colors.redAccent[100]),
+          alignment: Alignment.center,
         ),
       ],
     );

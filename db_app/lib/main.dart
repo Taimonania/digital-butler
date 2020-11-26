@@ -88,7 +88,8 @@ class _MainViewState extends State<MainView> {
           ),
         ],
         currentIndex: _selectedIndex,
-        selectedItemColor: Colors.amber[800],
+        unselectedItemColor: Colors.red[100],
+        selectedItemColor: Colors.red,
         onTap: _onItemTapped,
       ),
     );
