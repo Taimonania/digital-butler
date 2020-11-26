@@ -23,16 +23,18 @@ class _EditPageState extends State<EditPage> {
 
   //file where the image is stored
   File _image;
+  String imgPath = '';
   // future for getting the image
   Future getImage() async {
     // ignore: deprecated_member_use
     final image = await ImagePicker.pickImage(source: ImageSource.camera);
-    final directory = await getApplicationDocumentsDirectory();
-    picPath = directory.path;
-    final File newImage = await image.copy('$picPath/test.png');
+    //final directory = await getApplicationDocumentsDirectory();
+    imgPath = image.path;
+    File newImage = File(imgPath);
+    //final File newImage = await newImage.copy(newImage.path);
 
     setState(() {
-      _image = image;
+      _image = newImage;
     });
   }
 
@@ -45,7 +47,7 @@ class _EditPageState extends State<EditPage> {
         name: nameCon.value.text,
         description: desCon.value.text,
         localName: "false",
-        picPath: "false"));
+        picPath: imgPath));
     print("A new meal was saved: " + controller.value.text);
     controller.clear();
   }
