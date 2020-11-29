@@ -56,6 +56,16 @@ class DataService {
     });
   }
 
+  void deleteMeal(int index) {
+    getMeals().then((curMeals) {
+      MealItem meal = curMeals.meals[index];
+      print("Delete meal: ${meal.name}" )
+      curMeals.meals.removeAt(index);
+
+      storeMeals(curMeals);
+    });
+  }
+
   void storeMeals(MealList meals) async {
     await storage.ready;
     storage.setItem('meals', meals.toJSONEncodable());
