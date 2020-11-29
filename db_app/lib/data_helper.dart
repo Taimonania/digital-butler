@@ -59,7 +59,7 @@ class DataService {
   void deleteMeal(int index) {
     getMeals().then((curMeals) {
       MealItem meal = curMeals.meals[index];
-      print("Delete meal: ${meal.name}" )
+      print("Delete meal: ${meal.name}");
       curMeals.meals.removeAt(index);
 
       storeMeals(curMeals);
