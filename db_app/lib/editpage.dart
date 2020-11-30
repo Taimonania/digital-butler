@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'data_helper.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:location/location.dart';
 import 'package:path_provider/path_provider.dart';
 
 class EditPage extends StatefulWidget {
@@ -43,16 +44,50 @@ class _EditPageState extends State<EditPage> {
     });
   }
 
+  // location code -----
+  Location mealLocation = new Location();
+  String location = '';
+  Future getMealLocation() async {
+    bool _serviceEnabled;
+    PermissionStatus _permissionGranted;
+    LocationData _locationData;
+
+    _serviceEnabled = await mealLocation.serviceEnabled();
+    if (!_serviceEnabled) {
+      _serviceEnabled = await mealLocation.requestService();
+      if (!_serviceEnabled) {
+        return;
+      }
+    }
+
+    _permissionGranted = await mealLocation.hasPermission();
+    if (_permissionGranted == PermissionStatus.denied) {
+      _permissionGranted = await mealLocation.requestPermission();
+      if (_permissionGranted != PermissionStatus.granted) {
+        return;
+      }
+    }
+
+    _locationData = await mealLocation.getLocation();
+
+    setState(() {
+      location = _locationData.toString();
+    });
+  }
+  //--------------------
+
   _EditPageState() {
     _meals = new MealList();
   }
 
   void _save() {
     service.addMeal(MealItem(
-        name: nameCon.value.text,
-        description: desCon.value.text,
-        localName: "false",
-        picPath: imgPath));
+      name: nameCon.value.text,
+      description: desCon.value.text,
+      localName: "false",
+      picPath: imgPath,
+      coords: location,
+    ));
     print("A new meal was saved: " + controller.value.text);
     imgPath = '';
     controller.clear();
@@ -105,29 +140,51 @@ class _EditPageState extends State<EditPage> {
               //onEditingComplete: _save,
             ),
           ),
-          Container(
-            margin: EdgeInsets.all(16),
-            padding: const EdgeInsets.all(8.0),
-            child: Center(
-                //checking if the image is null
-                child: imgPath == ''
-                    ? Text("take a pic...")
-                    : Image.file(
-                        _image,
-                        width: 330,
-                        height: 330,
-                      )),
-          ),
-          Container(
-            margin: EdgeInsets.all(5),
-            child: IconButton(
-              icon: Icon(Icons.camera),
-              onPressed: getImage,
-              splashColor: Colors.lightBlue,
-            ),
-            decoration: BoxDecoration(
-                shape: BoxShape.circle, color: Colors.redAccent[100]),
-            alignment: Alignment.center,
+          Column(
+            children: [
+              Container(
+                margin: EdgeInsets.all(16),
+                padding: const EdgeInsets.all(8.0),
+                child: Center(
+                    //checking if the image is null
+                    child: imgPath == ''
+                        ? Text("take a pic...")
+                        : Image.file(
+                            _image,
+                            width: 330,
+                            height: 330,
+                          )),
+              ),
+              Container(
+                margin: EdgeInsets.all(5),
+                child: IconButton(
+                  icon: Icon(Icons.camera),
+                  onPressed: getImage,
+                  splashColor: Colors.lightBlue,
+                ),
+                decoration: BoxDecoration(
+                    shape: BoxShape.circle, color: Colors.redAccent[100]),
+                alignment: Alignment.center,
+              ),
+              Container(
+                  margin: EdgeInsets.all(16),
+                  padding: const EdgeInsets.all(2.0),
+                  child: Center(
+                      //checking if the image is null
+                      child: location == ''
+                          ? Text("where did you eat?")
+                          : Text('saved'))),
+              Container(
+                child: IconButton(
+                  icon: Icon(Icons.map),
+                  onPressed: getMealLocation,
+                  splashColor: Colors.red[100],
+                ),
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                    shape: BoxShape.circle, color: Colors.green[100]),
+              ),
+            ],
           ),
         ],
       ),

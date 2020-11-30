@@ -24,6 +24,7 @@ dependencies:
   flutter:
     sdk: flutter
 
+  location: ^3.0.0
   expandable: ^4.1.4
   path_provider: ^1.6.24
   image_picker: ^0.6.7+14

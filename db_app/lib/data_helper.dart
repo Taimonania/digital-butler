@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:location/location.dart';
 import 'package:localstorage/localstorage.dart';
 
 class MealItem {
@@ -6,8 +7,10 @@ class MealItem {
   String localName;
   String picPath;
   String description;
+  String coords;
 
-  MealItem({this.name, this.description, this.localName, this.picPath});
+  MealItem(
+      {this.name, this.description, this.localName, this.picPath, this.coords});
 
   toJSONEncodable() {
     Map<String, dynamic> m = new Map();
@@ -16,6 +19,7 @@ class MealItem {
     m['local_name'] = localName;
     m['pic_path'] = picPath;
     m['description'] = description;
+    m['meal_location'] = coords;
     return m;
   }
 }
@@ -95,7 +99,8 @@ class DataService {
               name: meal['name'],
               description: meal['description'],
               localName: meal['local_name'],
-              picPath: meal['pic_path']),
+              picPath: meal['pic_path'],
+              coords: meal['meal_location']),
         ),
       );
       return meals;

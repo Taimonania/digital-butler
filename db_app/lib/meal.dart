@@ -7,7 +7,7 @@ import 'dart:io';
 class MealExpand extends StatelessWidget {
   final MealItem meal;
   final int index;
-  OverviewState parent;
+  final OverviewState parent;
 
   MealExpand(this.meal, this.index, this.parent);
 
@@ -30,6 +30,18 @@ class MealExpand extends StatelessWidget {
                 meal.description + "\n",
                 softWrap: true,
               ),
+            ),
+            Container(
+              alignment: Alignment.centerLeft,
+              padding: const EdgeInsets.all(2.0),
+              child: meal.coords != ''
+                  ? Text(
+                      meal.coords.split('<')[1].split('>')[0] + "\n",
+                      softWrap: true,
+                    )
+                  : Text('no location saved',
+                      softWrap: true,
+                      style: TextStyle(fontStyle: FontStyle.italic)),
             ),
             meal.picPath != ''
                 ? Container(
