@@ -20,15 +20,6 @@ class MealExpand extends StatelessWidget {
             meal.name,
             style: TextStyle(color: Colors.red, fontSize: 18),
           ),
-          IconButton(
-            icon: Icon(Icons.delete),
-            tooltip: 'Delete this meal',
-            onPressed: () {
-              parent.setState(() {
-                DataService().deleteMeal(index);
-              });
-            },
-          ),
         ]),
         expanded: Column(
           children: [
@@ -63,6 +54,20 @@ class MealExpand extends StatelessWidget {
                       softWrap: true,
                       style: TextStyle(fontStyle: FontStyle.italic),
                     )),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                IconButton(
+                  icon: Icon(Icons.delete),
+                  tooltip: 'Delete this meal',
+                  onPressed: () {
+                    parent.setState(() {
+                      DataService().deleteMeal(index);
+                    });
+                  },
+                ),
+              ],
+            )
           ],
         ),
         // ignore: deprecated_member_use

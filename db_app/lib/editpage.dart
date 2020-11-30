@@ -54,6 +54,7 @@ class _EditPageState extends State<EditPage> {
         localName: "false",
         picPath: imgPath));
     print("A new meal was saved: " + controller.value.text);
+    imgPath = '';
     controller.clear();
     nameCon.clear();
     desCon.clear();
