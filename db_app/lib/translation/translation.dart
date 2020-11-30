@@ -57,10 +57,10 @@ class _TranslationScreenState extends State<TranslationScreen> {
   void openFromLanguagePickerDialog() => showDialog(
         context: context,
         builder: (context) => Theme(
-            data: Theme.of(context).copyWith(primaryColor: Colors.deepOrange),
+            data: Theme.of(context).copyWith(primaryColor: Colors.red),
             child: LanguagePickerDialog(
                 titlePadding: EdgeInsets.all(8.0),
-                searchCursorColor: Colors.deepOrangeAccent,
+                searchCursorColor: Colors.red,
                 searchInputDecoration: InputDecoration(
                   hintText: 'Search...',
                   hintStyle: GoogleFonts.poppins(
@@ -91,10 +91,10 @@ class _TranslationScreenState extends State<TranslationScreen> {
   void openToLanguagePickerDialog() => showDialog(
         context: context,
         builder: (context) => Theme(
-            data: Theme.of(context).copyWith(primaryColor: Colors.deepOrange),
+            data: Theme.of(context).copyWith(primaryColor: Colors.red),
             child: LanguagePickerDialog(
                 titlePadding: EdgeInsets.all(8.0),
-                searchCursorColor: Colors.deepOrangeAccent,
+                searchCursorColor: Colors.redAccent,
                 searchInputDecoration: InputDecoration(
                   hintText: 'Search...',
                   hintStyle: GoogleFonts.poppins(
@@ -181,7 +181,7 @@ class _TranslationScreenState extends State<TranslationScreen> {
       //       fontWeight: FontWeight.w500,
       //     )),
       //   ),
-      //   backgroundColor: Colors.deepOrange,
+      //   backgroundColor: Colors.red,
       // ),
       body: Container(
           width: MediaQuery.of(context).size.width,
@@ -224,7 +224,7 @@ class _TranslationScreenState extends State<TranslationScreen> {
                           width: 50,
                           height: 50,
                           decoration: BoxDecoration(
-                              color: Colors.deepOrange,
+                              color: Colors.red,
                               borderRadius: BorderRadius.only(
                                   topRight: Radius.circular(10),
                                   bottomRight: Radius.circular(10))),
@@ -279,7 +279,7 @@ class _TranslationScreenState extends State<TranslationScreen> {
                           width: 50,
                           height: 50,
                           decoration: BoxDecoration(
-                              color: Colors.deepOrange,
+                              color: Colors.red,
                               borderRadius: BorderRadius.only(
                                   topRight: Radius.circular(10),
                                   bottomRight: Radius.circular(10))),
@@ -315,7 +315,7 @@ class _TranslationScreenState extends State<TranslationScreen> {
                           padding: EdgeInsets.symmetric(
                               horizontal: 16, vertical: 10),
                           decoration: BoxDecoration(
-                              color: Colors.deepOrange,
+                              color: Colors.red,
                               borderRadius: BorderRadius.only(
                                   topLeft: Radius.circular(10),
                                   bottomLeft: Radius.circular(10))),
