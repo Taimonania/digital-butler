@@ -14,7 +14,6 @@ class Overview extends StatefulWidget {
 class _OverviewState extends State<Overview> {
   MealList _meals;
   DataService service = new DataService();
-  TextEditingController controller = new TextEditingController();
 
   String currentEdit = "";
 

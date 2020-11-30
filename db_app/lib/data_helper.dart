@@ -47,7 +47,20 @@ class MealList {
 }
 
 class DataService {
-  LocalStorage storage = new LocalStorage('meals');
+  static final DataService _instance = DataService._internal();
+  MealList meals;
+  LocalStorage _storage;
+
+  // make DataService a singleton
+  factory DataService() {
+    return _instance;
+  }
+
+  DataService._internal() {
+    meals = new MealList();
+    _storage = new LocalStorage('meals');
+    getMeals().then((storedMeals) => meals = storedMeals);
+  }
 
   void addMeal(MealItem meal) {
     getMeals().then((curMeals) {
@@ -59,7 +72,7 @@ class DataService {
   void deleteMeal(int index) {
     getMeals().then((curMeals) {
       MealItem meal = curMeals.meals[index];
-      print("Delete meal: ${meal.name}" )
+      print("Delete meal: ${meal.name}");
       curMeals.meals.removeAt(index);
 
       storeMeals(curMeals);
@@ -67,15 +80,15 @@ class DataService {
   }
 
   void storeMeals(MealList meals) async {
-    await storage.ready;
-    storage.setItem('meals', meals.toJSONEncodable());
+    await _storage.ready;
+    _storage.setItem('meals', meals.toJSONEncodable());
   }
 
   Future<MealList> getMeals() async {
     MealList mealList = new MealList();
 
-    await storage.ready;
-    var items = storage.getItem('meals');
+    await _storage.ready;
+    var items = _storage.getItem('meals');
     if (items == null) {
       print("Meals list from the database is null");
       return MealList();
@@ -94,7 +107,7 @@ class DataService {
   }
 
   void clearMeals() async {
-    await storage.ready;
-    storage.clear();
+    await _storage.ready;
+    _storage.clear();
   }
 }
