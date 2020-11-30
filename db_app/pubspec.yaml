@@ -24,6 +24,7 @@ dependencies:
   flutter:
     sdk: flutter
 
+  url_launcher: ^5.7.10
   location: ^3.0.0
   expandable: ^4.1.4
   path_provider: ^1.6.24

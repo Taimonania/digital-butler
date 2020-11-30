@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'data_helper.dart';
 import 'package:expandable/expandable.dart';
 import 'dart:io';
+import 'maplauncher.dart';
 
 class MealExpand extends StatelessWidget {
   final MealItem meal;
@@ -35,9 +36,14 @@ class MealExpand extends StatelessWidget {
               alignment: Alignment.centerLeft,
               padding: const EdgeInsets.all(2.0),
               child: meal.coords != ''
-                  ? Text(
-                      meal.coords.split('<')[1].split('>')[0] + "\n",
-                      softWrap: true,
+                  ? IconButton(
+                      icon: Icon(Icons.map_rounded, color: Colors.redAccent),
+                      onPressed: () {
+                        MapHelper.coordLink(MapHelper.getLat(meal.coords),
+                            MapHelper.getLong(meal.coords));
+                      },
+                      tooltip: 'find in maps',
+                      splashColor: Colors.green[100],
                     )
                   : Text('no location saved',
                       softWrap: true,
