@@ -37,13 +37,13 @@ class MealExpand extends StatelessWidget {
               padding: const EdgeInsets.all(2.0),
               child: meal.coords != ''
                   ? IconButton(
-                      icon: Icon(Icons.map_rounded, color: Colors.redAccent),
+                      icon: Icon(Icons.pin_drop, color: Colors.green[100]),
                       onPressed: () {
                         MapHelper.coordLink(MapHelper.getLat(meal.coords),
                             MapHelper.getLong(meal.coords));
                       },
                       tooltip: 'find in maps',
-                      splashColor: Colors.green[100],
+                      splashColor: Colors.red[100],
                     )
                   : Text('no location saved',
                       softWrap: true,
