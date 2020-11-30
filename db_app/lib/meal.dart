@@ -1,3 +1,4 @@
+import 'package:db_app/overview.dart';
 import 'package:flutter/material.dart';
 import 'data_helper.dart';
 import 'package:expandable/expandable.dart';
@@ -5,17 +6,30 @@ import 'dart:io';
 
 class MealExpand extends StatelessWidget {
   final MealItem meal;
+  final int index;
+  OverviewState parent;
 
-  MealExpand(this.meal);
+  MealExpand(this.meal, this.index, this.parent);
 
   @override
   Widget build(BuildContext context) {
     return Container(
       child: ExpandablePanel(
-        header: Text(
-          meal.name,
-          style: TextStyle(color: Colors.red, fontSize: 18),
-        ),
+        header: Row(children: [
+          Text(
+            meal.name,
+            style: TextStyle(color: Colors.red, fontSize: 18),
+          ),
+          IconButton(
+            icon: Icon(Icons.delete),
+            tooltip: 'Delete this meal',
+            onPressed: () {
+              parent.setState(() {
+                DataService().deleteMeal(index);
+              });
+            },
+          ),
+        ]),
         expanded: Column(
           children: [
             Container(

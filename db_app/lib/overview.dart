@@ -8,24 +8,21 @@ class Overview extends StatefulWidget {
   final String title;
 
   @override
-  _OverviewState createState() => _OverviewState();
+  OverviewState createState() => OverviewState();
 }
 
-class _OverviewState extends State<Overview> {
+class OverviewState extends State<Overview> {
   MealList _meals;
   DataService service = new DataService();
 
   String currentEdit = "";
 
-  _OverviewState() {
+  OverviewState() {
     _meals = new MealList();
   }
 
-  Widget _buildMealRow(MealItem meal) {
-    // return ListTile(
-    //   title: Text(meal.name),
-    // );
-    return MealExpand(meal);
+  Widget _buildMealRow(MealItem meal, int index) {
+    return MealExpand(meal, index, this);
   }
 
   @override
@@ -45,9 +42,9 @@ class _OverviewState extends State<Overview> {
                   child: (() {
                     if (i.isOdd) return Divider();
                     final index = i ~/ 2;
-                    return _buildMealRow(_meals.meals[index]);
+                    return _buildMealRow(_meals.meals[index], index);
                   }()),
-                  onTap: () => service.deleteMeal(i),
+                  // onTap: () => ,
                 );
               });
         });

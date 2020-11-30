@@ -21,7 +21,7 @@ class MealItem {
 }
 
 /**
- *  here is where I would add a expandable list with a image widget as
+ * Here is where I would add a expandable list with a image widget as
  * a child to add images of the meals to the widget
  */
 class MealList {
@@ -48,6 +48,7 @@ class MealList {
 
 class DataService {
   static final DataService _instance = DataService._internal();
+  // This is always the current list of meals
   MealList meals;
   LocalStorage _storage;
 
@@ -63,37 +64,32 @@ class DataService {
   }
 
   void addMeal(MealItem meal) {
-    getMeals().then((curMeals) {
-      curMeals.add(meal);
-      storeMeals(curMeals);
-    });
+    meals.add(meal);
+    storeMeals(meals);
   }
 
   void deleteMeal(int index) {
-    getMeals().then((curMeals) {
-      MealItem meal = curMeals.meals[index];
-      print("Delete meal: ${meal.name}");
-      curMeals.meals.removeAt(index);
+    MealItem meal = meals.meals[index];
+    print("Delete meal: ${meal.name}");
+    meals.meals.removeAt(index);
 
-      storeMeals(curMeals);
-    });
+    storeMeals(meals);
   }
 
   void storeMeals(MealList meals) async {
+    this.meals = meals;
     await _storage.ready;
     _storage.setItem('meals', meals.toJSONEncodable());
   }
 
   Future<MealList> getMeals() async {
-    MealList mealList = new MealList();
-
     await _storage.ready;
     var items = _storage.getItem('meals');
     if (items == null) {
       print("Meals list from the database is null");
       return MealList();
     } else {
-      mealList.meals = List<MealItem>.from(
+      meals.meals = List<MealItem>.from(
         (items as List).map(
           (meal) => MealItem(
               name: meal['name'],
@@ -102,11 +98,12 @@ class DataService {
               picPath: meal['pic_path']),
         ),
       );
-      return mealList;
+      return meals;
     }
   }
 
   void clearMeals() async {
+    meals.meals.clear();
     await _storage.ready;
     _storage.clear();
   }
