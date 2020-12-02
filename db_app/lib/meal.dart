@@ -34,20 +34,24 @@ class MealExpand extends StatelessWidget {
             ),
             Container(
               alignment: Alignment.centerLeft,
-              padding: const EdgeInsets.all(2.0),
+              //padding: const EdgeInsets.all(2.0),
               child: meal.coords != ''
-                  ? IconButton(
-                      icon: Icon(Icons.pin_drop, color: Colors.green[100]),
-                      onPressed: () {
-                        MapHelper.coordLink(MapHelper.getLat(meal.coords),
-                            MapHelper.getLong(meal.coords));
-                      },
-                      tooltip: 'find in maps',
-                      splashColor: Colors.red[100],
+                  ? Container(
+                      alignment: Alignment.topLeft,
+                      child: IconButton(
+                        icon: Icon(Icons.pin_drop),
+                        onPressed: () {
+                          MapHelper.coordLink(MapHelper.getLat(meal.coords),
+                              MapHelper.getLong(meal.coords));
+                        },
+                        tooltip: 'find in maps',
+                        splashColor: Colors.red[100],
+                      ),
                     )
-                  : Text('no location saved',
+                  : Text(
+                      '',
                       softWrap: true,
-                      style: TextStyle(fontStyle: FontStyle.italic)),
+                    ),
             ),
             meal.picPath != ''
                 ? Container(
@@ -61,31 +65,27 @@ class MealExpand extends StatelessWidget {
                     ),
                   )
                 : Container(
-                    decoration: BoxDecoration(
-                      border: Border(
-                          bottom:
-                              BorderSide(width: 2.0, color: Colors.red[100])),
-                    ),
                     padding: const EdgeInsets.all(2.0),
                     child: Text(
-                      'no image for this meal',
+                      '',
                       softWrap: true,
-                      style: TextStyle(fontStyle: FontStyle.italic),
                     )),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                IconButton(
-                  icon: Icon(Icons.delete),
-                  tooltip: 'Delete this meal',
-                  onPressed: () {
-                    parent.setState(() {
-                      DataService().deleteMeal(index);
-                    });
-                  },
-                ),
-              ],
-            )
+            Container(
+              alignment: Alignment.center,
+              margin: EdgeInsets.all(5),
+              decoration: BoxDecoration(
+                  shape: BoxShape.circle, color: Colors.redAccent[100]),
+              child: IconButton(
+                splashColor: Colors.red,
+                icon: Icon(Icons.delete),
+                tooltip: 'Delete this meal',
+                onPressed: () {
+                  parent.setState(() {
+                    DataService().deleteMeal(index);
+                  });
+                },
+              ),
+            ),
           ],
         ),
         // ignore: deprecated_member_use
