@@ -7,10 +7,11 @@ class MealItem {
   String localName;
   String picPath;
   String description;
+  String price;
   String coords;
 
   MealItem(
-      {this.name, this.description, this.localName, this.picPath, this.coords});
+      {this.name, this.description, this.price, this.localName, this.picPath, this.coords});
 
   toJSONEncodable() {
     Map<String, dynamic> m = new Map();
@@ -19,6 +20,7 @@ class MealItem {
     m['local_name'] = localName;
     m['pic_path'] = picPath;
     m['description'] = description;
+    m['price'] = price;
     m['meal_location'] = coords;
     return m;
   }
@@ -98,6 +100,7 @@ class DataService {
           (meal) => MealItem(
               name: meal['name'],
               description: meal['description'],
+              price: meal['price'],
               localName: meal['local_name'],
               picPath: meal['pic_path'],
               coords: meal['meal_location']),

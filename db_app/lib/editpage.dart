@@ -6,9 +6,10 @@ import 'package:location/location.dart';
 import 'package:path_provider/path_provider.dart';
 
 class EditPage extends StatefulWidget {
-  EditPage({Key key, this.title, this.description}) : super(key: key);
+  EditPage({Key key, this.title, this.description, this.price}) : super(key: key);
   final String title;
   final String description;
+  final String price;
 
   @override
   _EditPageState createState() => _EditPageState();
@@ -21,6 +22,7 @@ class _EditPageState extends State<EditPage> {
   MealList _meals;
   final nameCon = new TextEditingController();
   final desCon = new TextEditingController();
+  final priceCon = new TextEditingController();
 
   //file where the image is stored
   File _image;
@@ -84,6 +86,7 @@ class _EditPageState extends State<EditPage> {
     service.addMeal(MealItem(
       name: nameCon.value.text,
       description: desCon.value.text,
+      price: priceCon.value.text,
       localName: "false",
       picPath: imgPath,
       coords: location,
@@ -93,6 +96,7 @@ class _EditPageState extends State<EditPage> {
     controller.clear();
     nameCon.clear();
     desCon.clear();
+    priceCon.clear();
   }
 
   @override
@@ -105,6 +109,7 @@ class _EditPageState extends State<EditPage> {
               controller: nameCon,
               decoration: InputDecoration(
                 labelText: 'What did you get?',
+                border: OutlineInputBorder()
               ),
               //onEditingComplete: _save, !!! changed this
             ),
@@ -128,7 +133,26 @@ class _EditPageState extends State<EditPage> {
               maxLines: 24,
               decoration: InputDecoration(
                 labelText: 'How was the meal?',
+                  border: OutlineInputBorder()
               ),
+              //onEditingComplete: _save,
+            ),
+          ),
+
+          Container(
+            padding: const EdgeInsets.all(16.0),
+            child: TextField(
+              controller: priceCon,
+              minLines: 1,
+              maxLines: 1,
+              decoration: InputDecoration(
+                hintText: 'Enter value and currency',
+                labelText: 'How much did it cost?',
+                  border: OutlineInputBorder(),
+                suffixIcon: Icon(Icons.attach_money,
+                color: Colors.green)
+              ),
+              //keyboardType: TextInputType.number,
               //onEditingComplete: _save,
             ),
           ),

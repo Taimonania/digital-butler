@@ -32,6 +32,17 @@ class MealExpand extends StatelessWidget {
                 softWrap: true,
               ),
             ),
+
+            Container(
+              alignment: Alignment.centerLeft,
+              padding: const EdgeInsets.all(2.0),
+              child: Text(
+                meal.price!=null?meal.price:'',
+                //meal.price, //+ "\n",
+                softWrap: true,
+              ),
+            ),
+
             Container(
               alignment: Alignment.centerLeft,
               //padding: const EdgeInsets.all(2.0),
