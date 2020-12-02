@@ -117,14 +117,6 @@ class _EditPageState extends State<EditPage> {
                   tooltip: 'Save',
                   splashColor: Colors.green[100],
                 ),
-
-                // this icon when pressed clears all of the meals saved which
-                // is not desired
-                // IconButton(
-                //   icon: Icon(Icons.delete),
-                //   onPressed: service.clearMeals,
-                //   tooltip: 'Clear storage',
-                // )
               ],
             ),
           ),
@@ -151,8 +143,8 @@ class _EditPageState extends State<EditPage> {
                         ? Text("take a pic...")
                         : Image.file(
                             _image,
-                            width: 330,
-                            height: 330,
+                            //width: 330,
+                            //height: 330,
                           )),
               ),
               Container(
