@@ -6,7 +6,8 @@ import 'package:location/location.dart';
 import 'package:path_provider/path_provider.dart';
 
 class EditPage extends StatefulWidget {
-  EditPage({Key key, this.title, this.description, this.price}) : super(key: key);
+  EditPage({Key key, this.title, this.description, this.price})
+      : super(key: key);
   final String title;
   final String description;
   final String price;
@@ -109,7 +110,8 @@ class _EditPageState extends State<EditPage> {
               controller: nameCon,
               decoration: InputDecoration(
                 labelText: 'What did you get?',
-                border: OutlineInputBorder()
+                border: OutlineInputBorder(
+                    borderRadius: const BorderRadius.all(Radius.circular(10))),
               ),
               //onEditingComplete: _save, !!! changed this
             ),
@@ -133,12 +135,12 @@ class _EditPageState extends State<EditPage> {
               maxLines: 24,
               decoration: InputDecoration(
                 labelText: 'How was the meal?',
-                  border: OutlineInputBorder()
+                border: OutlineInputBorder(
+                    borderRadius: const BorderRadius.all(Radius.circular(10))),
               ),
               //onEditingComplete: _save,
             ),
           ),
-
           Container(
             padding: const EdgeInsets.all(16.0),
             child: TextField(
@@ -146,12 +148,12 @@ class _EditPageState extends State<EditPage> {
               minLines: 1,
               maxLines: 1,
               decoration: InputDecoration(
-                hintText: 'Enter value and currency',
-                labelText: 'How much did it cost?',
-                  border: OutlineInputBorder(),
-                suffixIcon: Icon(Icons.attach_money,
-                color: Colors.green)
-              ),
+                  hintText: 'Enter value and currency',
+                  labelText: 'How much did it cost?',
+                  border: OutlineInputBorder(
+                      borderRadius:
+                          const BorderRadius.all(Radius.circular(10))),
+                  suffixIcon: Icon(Icons.attach_money, color: Colors.green)),
               //keyboardType: TextInputType.number,
               //onEditingComplete: _save,
             ),

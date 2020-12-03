@@ -17,9 +17,29 @@ class MealExpand extends StatelessWidget {
     return Container(
       child: ExpandablePanel(
         header: Row(children: [
-          Text(
-            meal.name,
-            style: TextStyle(color: Colors.red, fontSize: 18),
+          Padding(
+            padding: const EdgeInsets.all(6.0),
+            child: Text(
+              meal.name,
+              style: TextStyle(color: Colors.red, fontSize: 18),
+            ),
+          ),
+          Expanded(
+            child: Container(
+              alignment: Alignment.centerRight,
+              padding: const EdgeInsets.all(2.0),
+              child: Container(
+                child: Text(
+                  meal.price != null ? 'cost:\n' + meal.price : '',
+                  //meal.price, //+ "\n",
+                  softWrap: true,
+                  style: TextStyle(
+                      fontSize: 11,
+                      fontStyle: FontStyle.italic,
+                      color: Colors.green),
+                ),
+              ),
+            ),
           ),
         ]),
         expanded: Column(
@@ -32,17 +52,6 @@ class MealExpand extends StatelessWidget {
                 softWrap: true,
               ),
             ),
-
-            Container(
-              alignment: Alignment.centerLeft,
-              padding: const EdgeInsets.all(2.0),
-              child: Text(
-                meal.price!=null?meal.price:'',
-                //meal.price, //+ "\n",
-                softWrap: true,
-              ),
-            ),
-
             Container(
               alignment: Alignment.centerLeft,
               //padding: const EdgeInsets.all(2.0),
@@ -56,6 +65,7 @@ class MealExpand extends StatelessWidget {
                               MapHelper.getLong(meal.coords));
                         },
                         tooltip: 'find in maps',
+                        color: Colors.redAccent,
                         splashColor: Colors.red[100],
                       ),
                     )
