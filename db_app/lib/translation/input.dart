@@ -1,7 +1,9 @@
 import 'dart:convert';
-
+import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:image_cropper/image_cropper.dart';
 import 'package:language_pickers/language_picker_dialog.dart';
 import 'package:language_pickers/language_pickers.dart';
 import 'package:language_pickers/languages.dart';
@@ -12,119 +14,166 @@ import 'package:http/http.dart' as http;
 import 'package:translator/translator.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 
-class TranslationScreen extends StatefulWidget {
+class InputScreen extends StatefulWidget {
   @override
-  _TranslationScreenState createState() => _TranslationScreenState();
+  _InputScreenState createState() => _InputScreenState();
 }
 
-class _TranslationScreenState extends State<TranslationScreen> {
+class _InputScreenState extends State<InputScreen> {
   var myToLanguage = 'en';
-  var myFromLanguage = 'ko';
-  var myFromLanguageName = 'Korean';
+  var myFromLanguage = 'en';
+  var myFromLanguageName = 'English';
   var myToLanguageName = 'English';
+  var ocrLanguageCode = 'eng';
 
   Language _selectedFromDialogLanguage =
-      LanguagePickerUtils.getLanguageByIsoCode('en');
+  LanguagePickerUtils.getLanguageByIsoCode('en');
   Language _selectedToDialogLanguage =
-      LanguagePickerUtils.getLanguageByIsoCode('en');
+  LanguagePickerUtils.getLanguageByIsoCode('en');
 
 // It's sample code of Dialog Item.
   Widget _buildDialogItem(Language language) => Row(
-        children: <Widget>[
-          Text(
-            language.name,
-            style: GoogleFonts.poppins(
-                textStyle: TextStyle(
+    children: <Widget>[
+      Text(
+        language.name,
+        style: GoogleFonts.poppins(
+            textStyle: TextStyle(
               color: Colors.black,
               fontSize: 14,
               fontWeight: FontWeight.w400,
             )),
-          ),
-          SizedBox(width: 4.0),
-          Flexible(
-              child: Text(
+      ),
+      SizedBox(width: 4.0),
+      Flexible(
+          child: Text(
             "(${language.isoCode})",
             style: GoogleFonts.poppins(
                 textStyle: TextStyle(
-              color: Colors.black,
-              fontSize: 14,
-              fontWeight: FontWeight.w400,
-            )),
+                  color: Colors.black,
+                  fontSize: 14,
+                  fontWeight: FontWeight.w400,
+                )),
           ))
-        ],
-      );
+    ],
+  );
 
   void openFromLanguagePickerDialog() => showDialog(
-        context: context,
-        builder: (context) => Theme(
-            data: Theme.of(context).copyWith(primaryColor: Colors.red),
-            child: LanguagePickerDialog(
-                titlePadding: EdgeInsets.all(8.0),
-                searchCursorColor: Colors.red,
-                searchInputDecoration: InputDecoration(
-                  hintText: 'Search...',
-                  hintStyle: GoogleFonts.poppins(
-                      textStyle: TextStyle(
+    context: context,
+    builder: (context) => Theme(
+        data: Theme.of(context).copyWith(primaryColor: Colors.deepOrange),
+        child: LanguagePickerDialog(
+            titlePadding: EdgeInsets.all(8.0),
+            searchCursorColor: Colors.deepOrangeAccent,
+            searchInputDecoration: InputDecoration(
+              hintText: 'Search...',
+              hintStyle: GoogleFonts.poppins(
+                  textStyle: TextStyle(
                     color: Colors.black,
                     fontSize: 16,
                     fontWeight: FontWeight.w400,
                   )),
-                ),
-                isSearchable: true,
-                title: Text(
-                  'Select your language',
-                  style: GoogleFonts.poppins(
-                      textStyle: TextStyle(
+            ),
+            isSearchable: true,
+            title: Text(
+              'Select your language',
+              style: GoogleFonts.poppins(
+                  textStyle: TextStyle(
                     color: Colors.black,
                     fontSize: 16,
                     fontWeight: FontWeight.w800,
                   )),
-                ),
-                onValuePicked: (Language language) => setState(() {
-                      _selectedFromDialogLanguage = language;
-                      myFromLanguageName = _selectedFromDialogLanguage.name;
-                      myFromLanguage = _selectedFromDialogLanguage.isoCode;
-                    }),
-                itemBuilder: _buildDialogItem)),
-      );
+            ),
+            onValuePicked: (Language language) => setState(() {
+              _selectedFromDialogLanguage = language;
+              myFromLanguageName = _selectedFromDialogLanguage.name;
+              myFromLanguage = _selectedFromDialogLanguage.isoCode;
+              ocrLanguageCode = getOcrLanguageCode(_selectedFromDialogLanguage.isoCode);
+            }),
+            itemBuilder: _buildDialogItem)),
+  );
+
+  String getOcrLanguageCode(String isoCode){
+    String ocrLangCode = 'eng';
+    switch (isoCode){
+      case 'en':
+        ocrLangCode = 'eng';
+        break;
+      case 'zh_Hans':
+        ocrLangCode = 'chs';
+        break;
+      case 'zh_Hant':
+        ocrLangCode = 'cht';
+        break;
+      case 'ja':
+        ocrLangCode = 'jpn';
+        break;
+      case 'jv':
+        ocrLangCode = 'jpn';
+        break;
+      case 'ko':
+        ocrLangCode = 'kor';
+        break;
+      default:
+        break;
+    }
+    return ocrLangCode;
+  }
 
   void openToLanguagePickerDialog() => showDialog(
-        context: context,
-        builder: (context) => Theme(
-            data: Theme.of(context).copyWith(primaryColor: Colors.red),
-            child: LanguagePickerDialog(
-                titlePadding: EdgeInsets.all(8.0),
-                searchCursorColor: Colors.redAccent,
-                searchInputDecoration: InputDecoration(
-                  hintText: 'Search...',
-                  hintStyle: GoogleFonts.poppins(
-                      textStyle: TextStyle(
+    context: context,
+    builder: (context) => Theme(
+        data: Theme.of(context).copyWith(primaryColor: Colors.deepOrange),
+        child: LanguagePickerDialog(
+            titlePadding: EdgeInsets.all(8.0),
+            searchCursorColor: Colors.deepOrangeAccent,
+            searchInputDecoration: InputDecoration(
+              hintText: 'Search...',
+              hintStyle: GoogleFonts.poppins(
+                  textStyle: TextStyle(
                     color: Colors.black,
                     fontSize: 16,
                     fontWeight: FontWeight.w400,
                   )),
-                ),
-                isSearchable: true,
-                title: Text(
-                  'Select your language',
-                  style: GoogleFonts.poppins(
-                      textStyle: TextStyle(
+            ),
+            isSearchable: true,
+            title: Text(
+              'Select your language',
+              style: GoogleFonts.poppins(
+                  textStyle: TextStyle(
                     color: Colors.black,
                     fontSize: 16,
                     fontWeight: FontWeight.w800,
                   )),
-                ),
-                onValuePicked: (Language language) => setState(() {
-                      _selectedToDialogLanguage = language;
-                      myToLanguageName = _selectedToDialogLanguage.name;
-                      myToLanguage = _selectedToDialogLanguage.isoCode;
-                    }),
-                itemBuilder: _buildDialogItem)),
-      );
+            ),
+            onValuePicked: (Language language) => setState(() {
+              _selectedToDialogLanguage = language;
+              myToLanguageName = _selectedToDialogLanguage.name;
+              myToLanguage = _selectedToDialogLanguage.isoCode;
+            }),
+            itemBuilder: _buildDialogItem)),
+  );
 
   parseTheText(ImageSource source) async {
     final imageFile = await ImagePicker()
         .getImage(source: source, maxWidth: 700, maxHeight: 1000);
+    File croppedFile = await ImageCropper.cropImage(
+        sourcePath: imageFile.path,
+        aspectRatioPresets: [
+          CropAspectRatioPreset.square,
+          CropAspectRatioPreset.ratio3x2,
+          CropAspectRatioPreset.original,
+          CropAspectRatioPreset.ratio4x3,
+          CropAspectRatioPreset.ratio16x9
+        ],
+        androidUiSettings: AndroidUiSettings(
+            toolbarTitle: 'Cropper',
+            toolbarColor: Colors.deepOrange,
+            toolbarWidgetColor: Colors.white,
+            initAspectRatio: CropAspectRatioPreset.original,
+            lockAspectRatio: false),
+        iosUiSettings: IOSUiSettings(
+          minimumAspectRatio: 1.0,
+        ));
 
     ProgressDialog progressDialog = ProgressDialog(context);
     progressDialog = ProgressDialog(context,
@@ -138,51 +187,62 @@ class _TranslationScreenState extends State<TranslationScreen> {
         messageTextStyle: TextStyle(
             color: Colors.black, fontSize: 19.0, fontWeight: FontWeight.w600));
 
-    if (imageFile != null) {
+    if (croppedFile != null) {
       progressDialog.show();
     }
 
-    var bytes = Io.File(imageFile.path.toString()).readAsBytesSync();
+    var bytes = Io.File(croppedFile.path.toString()).readAsBytesSync();
     String img64 = base64Encode(bytes);
 
     var url = 'https://api.ocr.space/parse/image';
-    var payload = {"base64image": "data:image/jpg;base64,${img64.toString()}"};
+    var payload = {"base64image": "data:image/jpg;base64,${img64.toString()}", "language": ocrLanguageCode};
     var header = {"apiKey": "ab1a430f1788957"};
     var post = await http.post(url, body: payload, headers: header);
 
     var result = jsonDecode(post.body);
     String parsedText = result['ParsedResults'][0]['ParsedText'];
-    print(parsedText);
-
-    final translator = GoogleTranslator();
-    var translation = await translator.translate(parsedText,
-        from: myFromLanguage, to: myToLanguage);
-    print(translation);
-    progressDialog.hide();
-
-    Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) =>
-                OutputScreen(img64.toString(), translation.toString())));
+    print(' Parsed text is $parsedText and whole result is ${post.body}');
+    if (parsedText.length > 0) {
+      final translator = GoogleTranslator();
+      var translation = await translator.translate(parsedText,
+          from: myFromLanguage, to: myToLanguage);
+      print(translation);
+      progressDialog.hide();
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) =>
+                  OutputScreen(img64.toString(), translation.toString())));
+    } else {
+      progressDialog.hide();
+      print("error");
+      Fluttertoast.showToast(
+          msg: 'Please Pick Other one',
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.CENTER,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          fontSize: 16.0);
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   centerTitle: true,
-      //   title: Text(
-      //     'Translate',
-      //     style: GoogleFonts.poppins(
-      //         textStyle: TextStyle(
-      //       color: Colors.white,
-      //       fontSize: 18,
-      //       fontWeight: FontWeight.w500,
-      //     )),
-      //   ),
-      //   backgroundColor: Colors.red,
-      // ),
+      appBar: AppBar(
+        centerTitle: true,
+        title: Text(
+          'Translate',
+          style: GoogleFonts.poppins(
+              textStyle: TextStyle(
+                color: Colors.white,
+                fontSize: 18,
+                fontWeight: FontWeight.w500,
+              )),
+        ),
+        backgroundColor: Colors.deepOrange,
+      ),
       body: Container(
           width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.height,
@@ -213,10 +273,10 @@ class _TranslationScreenState extends State<TranslationScreen> {
                             myFromLanguageName,
                             style: GoogleFonts.poppins(
                                 textStyle: TextStyle(
-                              color: Colors.black87,
-                              fontSize: 18,
-                              fontWeight: FontWeight.w400,
-                            )),
+                                  color: Colors.black87,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w400,
+                                )),
                           ),
                         ),
                       ),
@@ -224,7 +284,7 @@ class _TranslationScreenState extends State<TranslationScreen> {
                           width: 50,
                           height: 50,
                           decoration: BoxDecoration(
-                              color: Colors.red,
+                              color: Colors.deepOrange,
                               borderRadius: BorderRadius.only(
                                   topRight: Radius.circular(10),
                                   bottomRight: Radius.circular(10))),
@@ -268,10 +328,10 @@ class _TranslationScreenState extends State<TranslationScreen> {
                             myToLanguageName,
                             style: GoogleFonts.poppins(
                                 textStyle: TextStyle(
-                              color: Colors.black87,
-                              fontSize: 18,
-                              fontWeight: FontWeight.w400,
-                            )),
+                                  color: Colors.black87,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w400,
+                                )),
                           ),
                         ),
                       ),
@@ -279,7 +339,7 @@ class _TranslationScreenState extends State<TranslationScreen> {
                           width: 50,
                           height: 50,
                           decoration: BoxDecoration(
-                              color: Colors.red,
+                              color: Colors.deepOrange,
                               borderRadius: BorderRadius.only(
                                   topRight: Radius.circular(10),
                                   bottomRight: Radius.circular(10))),
@@ -315,7 +375,7 @@ class _TranslationScreenState extends State<TranslationScreen> {
                           padding: EdgeInsets.symmetric(
                               horizontal: 16, vertical: 10),
                           decoration: BoxDecoration(
-                              color: Colors.red,
+                              color: Colors.deepOrange,
                               borderRadius: BorderRadius.only(
                                   topLeft: Radius.circular(10),
                                   bottomLeft: Radius.circular(10))),
@@ -324,10 +384,10 @@ class _TranslationScreenState extends State<TranslationScreen> {
                             textAlign: TextAlign.center,
                             style: GoogleFonts.poppins(
                                 textStyle: TextStyle(
-                              color: Colors.white,
-                              fontSize: 18,
-                              fontWeight: FontWeight.w400,
-                            )),
+                                  color: Colors.white,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w400,
+                                )),
                           ),
                         ),
                       ),
@@ -352,10 +412,10 @@ class _TranslationScreenState extends State<TranslationScreen> {
                             textAlign: TextAlign.center,
                             style: GoogleFonts.poppins(
                                 textStyle: TextStyle(
-                              color: Colors.black87,
-                              fontSize: 18,
-                              fontWeight: FontWeight.w400,
-                            )),
+                                  color: Colors.black87,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w400,
+                                )),
                           ),
                         ),
                       ),
