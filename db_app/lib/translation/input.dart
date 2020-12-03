@@ -27,74 +27,75 @@ class _InputScreenState extends State<InputScreen> {
   var ocrLanguageCode = 'eng';
 
   Language _selectedFromDialogLanguage =
-  LanguagePickerUtils.getLanguageByIsoCode('en');
+      LanguagePickerUtils.getLanguageByIsoCode('en');
   Language _selectedToDialogLanguage =
-  LanguagePickerUtils.getLanguageByIsoCode('en');
+      LanguagePickerUtils.getLanguageByIsoCode('en');
 
 // It's sample code of Dialog Item.
   Widget _buildDialogItem(Language language) => Row(
-    children: <Widget>[
-      Text(
-        language.name,
-        style: GoogleFonts.poppins(
-            textStyle: TextStyle(
+        children: <Widget>[
+          Text(
+            language.name,
+            style: GoogleFonts.poppins(
+                textStyle: TextStyle(
               color: Colors.black,
               fontSize: 14,
               fontWeight: FontWeight.w400,
             )),
-      ),
-      SizedBox(width: 4.0),
-      Flexible(
-          child: Text(
+          ),
+          SizedBox(width: 4.0),
+          Flexible(
+              child: Text(
             "(${language.isoCode})",
             style: GoogleFonts.poppins(
                 textStyle: TextStyle(
-                  color: Colors.black,
-                  fontSize: 14,
-                  fontWeight: FontWeight.w400,
-                )),
+              color: Colors.black,
+              fontSize: 14,
+              fontWeight: FontWeight.w400,
+            )),
           ))
-    ],
-  );
+        ],
+      );
 
   void openFromLanguagePickerDialog() => showDialog(
-    context: context,
-    builder: (context) => Theme(
-        data: Theme.of(context).copyWith(primaryColor: Colors.deepOrange),
-        child: LanguagePickerDialog(
-            titlePadding: EdgeInsets.all(8.0),
-            searchCursorColor: Colors.deepOrangeAccent,
-            searchInputDecoration: InputDecoration(
-              hintText: 'Search...',
-              hintStyle: GoogleFonts.poppins(
-                  textStyle: TextStyle(
+        context: context,
+        builder: (context) => Theme(
+            data: Theme.of(context).copyWith(primaryColor: Colors.red),
+            child: LanguagePickerDialog(
+                titlePadding: EdgeInsets.all(8.0),
+                searchCursorColor: Colors.redAccent,
+                searchInputDecoration: InputDecoration(
+                  hintText: 'Search...',
+                  hintStyle: GoogleFonts.poppins(
+                      textStyle: TextStyle(
                     color: Colors.black,
                     fontSize: 16,
                     fontWeight: FontWeight.w400,
                   )),
-            ),
-            isSearchable: true,
-            title: Text(
-              'Select your language',
-              style: GoogleFonts.poppins(
-                  textStyle: TextStyle(
+                ),
+                isSearchable: true,
+                title: Text(
+                  'Select your language',
+                  style: GoogleFonts.poppins(
+                      textStyle: TextStyle(
                     color: Colors.black,
                     fontSize: 16,
                     fontWeight: FontWeight.w800,
                   )),
-            ),
-            onValuePicked: (Language language) => setState(() {
-              _selectedFromDialogLanguage = language;
-              myFromLanguageName = _selectedFromDialogLanguage.name;
-              myFromLanguage = _selectedFromDialogLanguage.isoCode;
-              ocrLanguageCode = getOcrLanguageCode(_selectedFromDialogLanguage.isoCode);
-            }),
-            itemBuilder: _buildDialogItem)),
-  );
+                ),
+                onValuePicked: (Language language) => setState(() {
+                      _selectedFromDialogLanguage = language;
+                      myFromLanguageName = _selectedFromDialogLanguage.name;
+                      myFromLanguage = _selectedFromDialogLanguage.isoCode;
+                      ocrLanguageCode = getOcrLanguageCode(
+                          _selectedFromDialogLanguage.isoCode);
+                    }),
+                itemBuilder: _buildDialogItem)),
+      );
 
-  String getOcrLanguageCode(String isoCode){
+  String getOcrLanguageCode(String isoCode) {
     String ocrLangCode = 'eng';
-    switch (isoCode){
+    switch (isoCode) {
       case 'en':
         ocrLangCode = 'eng';
         break;
@@ -120,38 +121,38 @@ class _InputScreenState extends State<InputScreen> {
   }
 
   void openToLanguagePickerDialog() => showDialog(
-    context: context,
-    builder: (context) => Theme(
-        data: Theme.of(context).copyWith(primaryColor: Colors.deepOrange),
-        child: LanguagePickerDialog(
-            titlePadding: EdgeInsets.all(8.0),
-            searchCursorColor: Colors.deepOrangeAccent,
-            searchInputDecoration: InputDecoration(
-              hintText: 'Search...',
-              hintStyle: GoogleFonts.poppins(
-                  textStyle: TextStyle(
+        context: context,
+        builder: (context) => Theme(
+            data: Theme.of(context).copyWith(primaryColor: Colors.red),
+            child: LanguagePickerDialog(
+                titlePadding: EdgeInsets.all(8.0),
+                searchCursorColor: Colors.redAccent,
+                searchInputDecoration: InputDecoration(
+                  hintText: 'Search...',
+                  hintStyle: GoogleFonts.poppins(
+                      textStyle: TextStyle(
                     color: Colors.black,
                     fontSize: 16,
                     fontWeight: FontWeight.w400,
                   )),
-            ),
-            isSearchable: true,
-            title: Text(
-              'Select your language',
-              style: GoogleFonts.poppins(
-                  textStyle: TextStyle(
+                ),
+                isSearchable: true,
+                title: Text(
+                  'Select your language',
+                  style: GoogleFonts.poppins(
+                      textStyle: TextStyle(
                     color: Colors.black,
                     fontSize: 16,
                     fontWeight: FontWeight.w800,
                   )),
-            ),
-            onValuePicked: (Language language) => setState(() {
-              _selectedToDialogLanguage = language;
-              myToLanguageName = _selectedToDialogLanguage.name;
-              myToLanguage = _selectedToDialogLanguage.isoCode;
-            }),
-            itemBuilder: _buildDialogItem)),
-  );
+                ),
+                onValuePicked: (Language language) => setState(() {
+                      _selectedToDialogLanguage = language;
+                      myToLanguageName = _selectedToDialogLanguage.name;
+                      myToLanguage = _selectedToDialogLanguage.isoCode;
+                    }),
+                itemBuilder: _buildDialogItem)),
+      );
 
   parseTheText(ImageSource source) async {
     final imageFile = await ImagePicker()
@@ -167,7 +168,7 @@ class _InputScreenState extends State<InputScreen> {
         ],
         androidUiSettings: AndroidUiSettings(
             toolbarTitle: 'Cropper',
-            toolbarColor: Colors.deepOrange,
+            toolbarColor: Colors.red,
             toolbarWidgetColor: Colors.white,
             initAspectRatio: CropAspectRatioPreset.original,
             lockAspectRatio: false),
@@ -195,7 +196,10 @@ class _InputScreenState extends State<InputScreen> {
     String img64 = base64Encode(bytes);
 
     var url = 'https://api.ocr.space/parse/image';
-    var payload = {"base64image": "data:image/jpg;base64,${img64.toString()}", "language": ocrLanguageCode};
+    var payload = {
+      "base64image": "data:image/jpg;base64,${img64.toString()}",
+      "language": ocrLanguageCode
+    };
     var header = {"apiKey": "ab1a430f1788957"};
     var post = await http.post(url, body: payload, headers: header);
 
@@ -230,23 +234,23 @@ class _InputScreenState extends State<InputScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: Text(
-          'Translate',
-          style: GoogleFonts.poppins(
-              textStyle: TextStyle(
-                color: Colors.white,
-                fontSize: 18,
-                fontWeight: FontWeight.w500,
-              )),
-        ),
-        backgroundColor: Colors.deepOrange,
-      ),
+      // appBar: AppBar(
+      //   centerTitle: true,
+      //   title: Text(
+      //     'Translate',
+      //     style: GoogleFonts.poppins(
+      //         textStyle: TextStyle(
+      //       color: Colors.white,
+      //       fontSize: 18,
+      //       fontWeight: FontWeight.w500,
+      //     )),
+      //   ),
+      //   backgroundColor: Colors.red[300],
+      // ),
       body: Container(
           width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.height,
-          color: Colors.grey[200],
+          color: Colors.white,
           padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -265,7 +269,7 @@ class _InputScreenState extends State<InputScreen> {
                           padding: EdgeInsets.symmetric(
                               horizontal: 16, vertical: 10),
                           decoration: BoxDecoration(
-                              color: Colors.white,
+                              color: Colors.grey[100],
                               borderRadius: BorderRadius.only(
                                   topLeft: Radius.circular(10),
                                   bottomLeft: Radius.circular(10))),
@@ -273,10 +277,10 @@ class _InputScreenState extends State<InputScreen> {
                             myFromLanguageName,
                             style: GoogleFonts.poppins(
                                 textStyle: TextStyle(
-                                  color: Colors.black87,
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w400,
-                                )),
+                              color: Colors.black87,
+                              fontSize: 18,
+                              fontWeight: FontWeight.w400,
+                            )),
                           ),
                         ),
                       ),
@@ -284,7 +288,7 @@ class _InputScreenState extends State<InputScreen> {
                           width: 50,
                           height: 50,
                           decoration: BoxDecoration(
-                              color: Colors.deepOrange,
+                              color: Colors.red,
                               borderRadius: BorderRadius.only(
                                   topRight: Radius.circular(10),
                                   bottomRight: Radius.circular(10))),
@@ -320,7 +324,7 @@ class _InputScreenState extends State<InputScreen> {
                           padding: EdgeInsets.symmetric(
                               horizontal: 16, vertical: 10),
                           decoration: BoxDecoration(
-                              color: Colors.white,
+                              color: Colors.grey[100],
                               borderRadius: BorderRadius.only(
                                   topLeft: Radius.circular(10),
                                   bottomLeft: Radius.circular(10))),
@@ -328,10 +332,10 @@ class _InputScreenState extends State<InputScreen> {
                             myToLanguageName,
                             style: GoogleFonts.poppins(
                                 textStyle: TextStyle(
-                                  color: Colors.black87,
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w400,
-                                )),
+                              color: Colors.black87,
+                              fontSize: 18,
+                              fontWeight: FontWeight.w400,
+                            )),
                           ),
                         ),
                       ),
@@ -339,7 +343,7 @@ class _InputScreenState extends State<InputScreen> {
                           width: 50,
                           height: 50,
                           decoration: BoxDecoration(
-                              color: Colors.deepOrange,
+                              color: Colors.red,
                               borderRadius: BorderRadius.only(
                                   topRight: Radius.circular(10),
                                   bottomRight: Radius.circular(10))),
@@ -375,7 +379,7 @@ class _InputScreenState extends State<InputScreen> {
                           padding: EdgeInsets.symmetric(
                               horizontal: 16, vertical: 10),
                           decoration: BoxDecoration(
-                              color: Colors.deepOrange,
+                              color: Colors.red,
                               borderRadius: BorderRadius.only(
                                   topLeft: Radius.circular(10),
                                   bottomLeft: Radius.circular(10))),
@@ -384,10 +388,10 @@ class _InputScreenState extends State<InputScreen> {
                             textAlign: TextAlign.center,
                             style: GoogleFonts.poppins(
                                 textStyle: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w400,
-                                )),
+                              color: Colors.white,
+                              fontSize: 18,
+                              fontWeight: FontWeight.w400,
+                            )),
                           ),
                         ),
                       ),
@@ -403,7 +407,7 @@ class _InputScreenState extends State<InputScreen> {
                           padding: EdgeInsets.symmetric(
                               horizontal: 16, vertical: 10),
                           decoration: BoxDecoration(
-                              color: Colors.white,
+                              color: Colors.grey[100],
                               borderRadius: BorderRadius.only(
                                   topRight: Radius.circular(10),
                                   bottomRight: Radius.circular(10))),
@@ -412,10 +416,10 @@ class _InputScreenState extends State<InputScreen> {
                             textAlign: TextAlign.center,
                             style: GoogleFonts.poppins(
                                 textStyle: TextStyle(
-                                  color: Colors.black87,
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w400,
-                                )),
+                              color: Colors.black87,
+                              fontSize: 18,
+                              fontWeight: FontWeight.w400,
+                            )),
                           ),
                         ),
                       ),
