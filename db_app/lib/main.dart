@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 
 import 'editpage.dart';
 import 'overview.dart';
-import 'translation/translation.dart';
+import 'translation/input.dart';
+import 'translation/output.dart';
 
 void main() {
   runApp(MyApp());
@@ -48,7 +49,7 @@ class _MainViewState extends State<MainView> {
         return EditPage(title: widget.title);
         break;
       case 2:
-        return TranslationScreen();
+        return InputScreen();
         break;
       default:
         return Text(
