@@ -98,6 +98,10 @@ class _EditPageState extends State<EditPage> {
     nameCon.clear();
     desCon.clear();
     priceCon.clear();
+    location = '';
+    setState(() {
+      _image = null;
+    });
   }
 
   @override
