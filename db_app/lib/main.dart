@@ -1,16 +1,36 @@
 import 'package:flutter/material.dart';
-
+import 'package:splashscreen/splashscreen.dart';
 import 'editpage.dart';
 import 'overview.dart';
 import 'translation/input.dart';
 import 'translation/output.dart';
 
-void main() {
-  runApp(MyApp());
+
+void main() => runApp(MaterialApp(home:Splash()));
+
+class Splash extends StatefulWidget {
+  @override
+  _SplashState createState() => _SplashState();
+}
+
+class _SplashState extends State<Splash>{
+  @override
+  Widget build(BuildContext context) {
+    return SplashScreen(
+      seconds: 6,
+      backgroundColor: Colors.white,
+      image: Image.asset('assets/loading.gif'),
+      loaderColor: Colors.red,
+      useLoader: true,
+      photoSize: 140.0,
+      navigateAfterSeconds: MyApp(),
+    );
+//    throw UnimplementedError();
+  }
 }
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
+  // This widget is the root of the application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
