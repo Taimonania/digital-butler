@@ -6,7 +6,7 @@
 ---
 
 ### Team members
-- Cade Lueker
+- Cade Lueker (commits as CadeMichael and cadelueker)
 - Timo Angerer
 - Sanjarbek Mamirjonov
 - Kevin Bustamante
